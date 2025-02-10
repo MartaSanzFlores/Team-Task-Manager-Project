@@ -1,0 +1,33 @@
+services:
+  nginx:  # Defines a service named "nginx"
+    image: nginx:1.27.4-alpine  # Uses the official Nginx image with version 1.27.4 based on Alpine Linux (lightweight)
+    ports:
+      - "8080:80"  # Maps port 8080 on the host to port 80 inside the container (default for Nginx)
+    volumes:
+      - ./:/code  # Mounts the current directory (host) to the /code directory inside the container
+      - ./nginx.conf:/etc/nginx/nginx.conf # Mounts the config file nginx (host) to the /nginx.conf file inside the container
+  php:
+    build: .  # Searches for a Dockerfile in the current directory to build the PHP image
+    volumes:
+      - ./:/code  # Mounts the current directory (host) to the /code directory inside the container
+
+  mysql:
+    image: mysql:latest  # Uses the latest official MySQL image
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Sets the root password for MySQL
+      MYSQL_DATABASE: appdb  # Creates a database named "appdb"
+      MYSQL_USER: user  # Creates a new user "user"
+      MYSQL_PASSWORD: password  # Sets the password for the new user
+    volumes:
+      - data:/var/lib/mysql  # Persists MySQL data using a named volume
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin  # Uses the official phpMyAdmin image
+    environment:
+      PMA_HOST: mysql  # Links phpMyAdmin to the MySQL service
+      MYSQL_ROOT_PASSWORD: root  # Uses the same root password as MySQL
+    ports:
+      - "8081:80"
+
+volumes:
+  data:  # Defines a named volume for MySQL data persistence
