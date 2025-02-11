@@ -1,3 +1,6 @@
-body {
-    background-color: skyblue;
+html, body {
+    height: 100vh !important;
+    width: 100vw !important;
+    background-color: aliceblue !important;
+    font-family: "Raleway", serif;
 }

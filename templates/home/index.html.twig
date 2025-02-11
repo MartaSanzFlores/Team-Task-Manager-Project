@@ -1,20 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Projects{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>PROJECTS</h1>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('create_project') }}" class="btn btn-outline-info">Create Project</a>
+        {% endif %}
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% set today = "now"|date("Y-m-d") %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/code/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/code/templates/home/index.html.twig</code></li>
-    </ul>
+    {% if projects %}
+        <div class="row">
+            <!-- Section des projets en cours -->
+            <div class="col-12 mb-4">
+                <h3 class="mb-4">Current Projects</h3>
+                <div class="list-group">
+                    {% for project in projects %}
+                        {% if project.startDate|date("Y-m-d") <= today and project.endDate|date("Y-m-d") >= today %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="m-0 p-0">{{ project.title }}</p>
+                                    <span class="material-symbols-outlined">
+                                        {% if app.user.id == project.owner.id or project.members|filter(member => member.id == app.user.id)|length > 0 %}
+                                        lock_open
+                                        {% else %}
+                                        lock
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                
+                                
+                            </a>
+                            {% else %}
+                            <p class="alert alert-warning">No projects available.</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Section des projets futurs -->
+            <div class="col-12 mb-4">
+                <h3 class="mb-4">Future Projects</h3>
+                <div class="list-group">
+                    {% for project in projects %}
+                        {% if project.startDate|date("Y-m-d") > today %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                {{ project.title }}
+                                <span class="material-symbols-outlined">
+                                    {% if app.user.id == project.owner.id or project.members|filter(member => member.id == app.user.id)|length > 0 %}
+                                    lock_open
+                                    {% else %}
+                                    lock
+                                    {% endif %}
+                                </span>
+                            </a>
+                            {% else %}
+                            <p class="alert alert-warning">No projects available.</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Section des projets terminés -->
+            <div class="col-12 mb-4">
+                <h3 class="mb-4">Finished Projects</h3>
+                <div class="list-group">
+                    {% for project in projects %}
+                        {% if project.endDate|date("Y-m-d") < today %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                {{ project.title }}
+                                <span class="material-symbols-outlined">
+                                    {% if app.user.id == project.owner.id or project.members|filter(member => member.id == app.user.id)|length > 0 %}
+                                    lock_open
+                                    {% else %}
+                                    lock
+                                    {% endif %}
+                                </span>
+                            </a>
+                            {% else %}
+                            <p class="alert alert-warning">No projects available.</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="alert alert-warning">No projects available.</p>
+    {% endif %}
 </div>
 {% endblock %}
+

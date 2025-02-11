@@ -1,0 +1,28 @@
+<!-- templates/partials/header.html.twig -->
+<header class="bg-dark text-white p-3">
+    <div class="container d-flex justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <img src="{{ asset('images/logo.png') }}" alt="Mon Logo" width="50" height="50">
+            <h1 class="h3 mb-0">Team Task Manager</h1>
+        </div>        
+        <nav>
+            <ul class="nav">
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ path('app_home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ path('app_logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ path('app_register') }}">Sign up</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
