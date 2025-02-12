@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>PROJECTS</h1>
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('create_project') }}" class="btn btn-outline-info">Create Project</a>
+        <a href="{{ path('create_project') }}" class="btn primary">Create Project</a>
         {% endif %}
     </div>
 
@@ -36,7 +36,7 @@
                                 
                             </a>
                             {% else %}
-                            <p class="alert alert-warning">No projects available.</p>
+                            <p class=" warning">No projects available.</p>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -59,7 +59,7 @@
                                 </span>
                             </a>
                             {% else %}
-                            <p class="alert alert-warning">No projects available.</p>
+                            <p class=" warning">No projects available.</p>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -82,14 +82,14 @@
                                 </span>
                             </a>
                             {% else %}
-                            <p class="alert alert-warning">No projects available.</p>
+                            <p class=" warning">No projects available.</p>
                         {% endif %}
                     {% endfor %}
                 </div>
             </div>
         </div>
     {% else %}
-        <p class="alert alert-warning">No projects available.</p>
+        <p class=" warning">No projects available.</p>
     {% endif %}
 </div>
 {% endblock %}

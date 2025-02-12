@@ -1,0 +1,11 @@
+.primary {
+    color: #fff;
+    background-color: #212529;
+    transition: all 0.5s ease-out
+}
+
+.primary:hover {
+    color: #212529;
+    background-color: #fff;
+    border: solid 1px #212529;
+}

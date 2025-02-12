@@ -1,0 +1,20 @@
+.list-group-item {
+    box-shadow: 10px 5px 5px #929faf !important;
+    position: relative;
+}
+
+.list-group-item::after {
+    background: linear-gradient(135deg, #8ee6ec 0%,#d1d9da 100%);
+    border-radius: 1rem 1rem 0 1rem;
+    content: '';
+    height: 3rem;
+    left: -1rem;
+    overflow: hidden;
+    position: absolute;
+    top: -1.5rem;
+    width: 3rem;
+}
+
+.list-group-item p {
+    margin-left: 2rem !important;
+}
