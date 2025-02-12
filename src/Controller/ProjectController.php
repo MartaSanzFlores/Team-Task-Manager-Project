@@ -38,4 +38,19 @@ final class ProjectController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/project/{id}', name: 'project', methods: ['GET'])]
+    public function show(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $project = $entityManager->getRepository(Project::class)->find($id);
+
+        if (!$project) {
+            throw $this->createNotFoundException('Project not found');
+        }
+
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+        ]);
+
+    }
 }

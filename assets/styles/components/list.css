@@ -1,9 +1,10 @@
 .list-group-item {
-    box-shadow: 10px 5px 5px #929faf !important;
+    box-shadow: 10px 5px 5px #c9d4e0 !important;
     position: relative;
+    margin: 0 0 18px 0;
 }
 
-.list-group-item::after {
+/* .list-group-item::after {
     background: linear-gradient(135deg, #8ee6ec 0%,#d1d9da 100%);
     border-radius: 1rem 1rem 0 1rem;
     content: '';
@@ -13,7 +14,7 @@
     position: absolute;
     top: -1.5rem;
     width: 3rem;
-}
+} */
 
 .list-group-item p {
     margin-left: 2rem !important;
