@@ -24,7 +24,7 @@ class ProjectType extends AbstractType
             ])
             ->add('members', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
             ])
         ;

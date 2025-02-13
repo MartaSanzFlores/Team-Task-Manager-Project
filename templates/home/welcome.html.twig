@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block body %}
+
+    <section id="welcome_page" class="h-100 w-100 d-flex justify-content-center align-items-center">  
+        <div class="container">
+            <div class="row align-items-center gx-5">
+                <div class="col-6">
+                    <img class="w-100" src="{{ asset('images/vector.png') }}" alt="Mon Vector">
+                </div>
+                <div class="col-6">
+                    <h1 class="text-light text-center border-bottom border-secondary my-4 py-2">TeamTaskPro</h1>
+                    <h2 class="text-light text-center border-bottom border-secondary my-4 py-2">Efficient project management for teams!</h2>
+                    <div class="row gy-2">
+                        <a class="col-12 btn primary" href="{{ path('app_login') }}">Login</a>
+                        <a class="col-12 btn primary" href="{{ path('app_register') }}">Sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+
+{% endblock %}

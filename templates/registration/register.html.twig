@@ -3,19 +3,28 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1 class="mb-4">Register</h1>
+<section id="register_page" class="container h-100 d-flex justify-content-center">
+    <div class="d-flex flex-column justify-content-center w-100 text-light bg-secondary m-5 p-4 rounded">
+        <h1 class="mb-4">Register</h1>
 
-    {{ form_errors(registrationForm) }}
+        {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.name, { 'attr': {'class': 'form-control mb-3'} }) }}
+            {{ form_row(registrationForm.email, { 'attr': {'class': 'form-control mb-3'} }) }}
+            {{ form_row(registrationForm.plainPassword, { 'label': 'Password', 'attr': {'class': 'form-control mb-3'} }) }}
+            {{ form_row(registrationForm.agreeTerms, { 'attr': {'class': 'form-check-input'} }) }}
 
-        <button type="submit" class="btn btn-primary">Register</button>
-    {{ form_end(registrationForm) }}
+            <div class="d-flex justify-content-center align-items-center gap-4">
+                <button type="submit" class="btn primary text-right">Register</button>
+                <p class="m-0 p-0">Do you have an account? Login <a class="link" href="{{ path('app_login') }}">here</a></p>
+            </div>
+            
+        {{ form_end(registrationForm) }}
 
-    <p>Do you have an account? Login <a href="{{ path('app_login') }}">here</a></p>
+    </div>
+    
+</section>
+    
 {% endblock %}
+

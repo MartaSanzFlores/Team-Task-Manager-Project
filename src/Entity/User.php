@@ -36,6 +36,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
+     * @var string The user name
+     */
+    #[ORM\Column]
+    private ?string $name = null;
+
+    /**
      * @var Collection<int, Project>
      */
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'owner')]
@@ -181,6 +187,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->participatingProjects->removeElement($participatingProject)) {
             $participatingProject->removeMember($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }

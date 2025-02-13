@@ -1,0 +1,29 @@
+.sub-section {
+    max-height: 300px;
+}
+
+.sub-section {
+    overflow: auto;
+    max-height: 300px;
+}
+
+.sub-section::-webkit-scrollbar {
+    width: 10px;
+}
+
+.sub-section::-webkit-scrollbar-track {
+    background: #606264;
+    border-radius: 10px;
+}
+
+.sub-section::-webkit-scrollbar-thumb {
+    background: #aad3ff; 
+    border-radius: 20px;
+}
+
+
+.sub-section::-webkit-scrollbar-thumb:hover {
+    background: #212529; 
+}
+
+

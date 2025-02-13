@@ -1,11 +1,27 @@
+.btn {
+    border-radius: 1rem !important;
+}
+
 .primary {
-    color: #fff;
-    background-color: #212529;
+    color: #000000;
+    background-color: #aad3ff;
     transition: all 0.5s ease-out
 }
 
 .primary:hover {
-    color: #212529;
-    background-color: #fff;
-    border: solid 1px #212529;
+    color: #aad3ff;
+    background-color: #212529;
+    border: solid 1px #aad3ff;
+}
+
+.success {
+    color: #000000;
+    background-color: #59a783;
+    transition: all 0.5s ease-out
+}
+
+.success:hover {
+    color: #59a783;
+    background-color: #212529;
+    border: solid 1px #59a783;
 }

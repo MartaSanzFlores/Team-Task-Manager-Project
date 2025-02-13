@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block body %}
+
+{% set today = "now"|date("Y-m-d") %}
+
+<section id="projects_overview" class="container h-100 d-flex flex-column justify-content-center text-light">
+
+    <div class="h-100">
+
+        <div class="d-flex align-items-center my-4">
+            <h1>Projects Overview</h1>
+            <span class="ms-4">{{ today }}</span>
+        </div>
+
+        <div>
+            <div class="row g-4 mb-4">
+                <div class="col-6">
+                    <div class="sub-section bg-tertiary rounded  p-4">
+                        <h2>Calendar</h2>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="sub-section bg-tertiary rounded  p-4">
+                        Projects Progress
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-6">
+                    <div class="sub-section bg-tertiary rounded  p-4">
+                        Team Directory
+                    </div>
+                </div>
+                <div class="col-6 overflow-auto bg-tertiary sub-section rounded p-4">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2>Projects</h2>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('create_project') }}" class="btn primary">Create Project</a>
+                            {% endif %}
+                        </div>
+                        {% if projects %}
+                                {% for project in projects %}
+                                    <div class="list-group">
+                                        <a href="{{ path('project', {'id': project.id}) }}" class="list-group-item list-group-item-action">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="m-0 p-0">{{ project.title }}</p>
+                                                <span class="material-symbols-outlined">
+                                                    {% if app.user.id == project.owner.id or project.members|filter(member => member.id == app.user.id)|length > 0 %}
+                                                        lock_open
+                                                    {% else %}
+                                                        lock
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                        {% else %}
+                            <p class="warning m-0">No projects available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
