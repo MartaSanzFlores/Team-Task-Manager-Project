@@ -34,6 +34,12 @@
     border: solid 1px #aad3ff !important;
 }
 
+.fc-today-button:disabled {
+    color: #00000080 !important;
+    background-color: #aad3ff75 !important;
+    pointer-events: none;
+}
+
 .fc .fc-daygrid-day.fc-day-today {
     background-color: #aad3ff52 !important;
 }

@@ -24,8 +24,19 @@
         <div class="section w-50 m-2">
 
             <div class="bg-tertiary rounded p-4 sub-section">
-                <h2>Projects Progress</h2>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis a ab doloribus nam explicabo quod, pariatur laudantium porro nulla consequatur debitis sequi dolorum provident libero repellendus necessitatibus quaerat adipisci at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis a ab doloribus nam explicabo quod, pariatur laudantium porro nulla consequatur debitis sequi dolorum provident libero repellendus necessitatibus quaerat adipisci at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis a ab doloribus nam explicabo quod, pariatur laudantium porro nulla consequatur debitis sequi dolorum provident libero repellendus necessitatibus quaerat adipisci at.
+                <h2 class="mb-4">Projects Progress</h2>
+                {% if projects %}
+                    {% for project in projects %}
+                    <div class="mb-2">
+                        <p class="m-0">{{ project.title }}</p>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="warning m-0">No projects available.</p>
+                {% endif %}
             </div>
 
                     <div class="bg-tertiary rounded p-4 sub-section">
