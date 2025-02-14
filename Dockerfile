@@ -13,6 +13,9 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql intl opcache
 # Installer Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Installer Node.js et npm
+RUN apk add --no-cache nodejs npm
+
 # Ajouter la configuration personnalisée d'OPcache
 ADD opcache.ini $PHP_INI_DIR/conf.d/
 

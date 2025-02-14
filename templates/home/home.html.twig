@@ -6,40 +6,33 @@
 
 {% set today = "now"|date("Y-m-d") %}
 
-<section id="projects_overview" class="container h-100 d-flex flex-column justify-content-center text-light">
+<section id="projects_overview" class="container-fuid vh-100 d-flex flex-column text-light">
 
-    <div class="h-100">
+    <div class="d-flex align-items-center my-2">
+        <h1>Projects Overview</h1>
+        <span class="ms-4">{{ today }}</span>
+    </div>
 
-        <div class="d-flex align-items-center my-4">
-            <h1>Projects Overview</h1>
-            <span class="ms-4">{{ today }}</span>
+    <div class="d-flex flex-grow-1">
+
+        <div class="section w-50 m-2">
+            <div class="bg-tertiary rounded p-4 flex-grow-1">
+                <div id="calendar"></div>
+            </div>
         </div>
 
-        <div>
-            <div class="row g-4 mb-4">
-                <div class="col-6">
-                    <div class="sub-section bg-tertiary rounded  p-4">
-                        <h2>Calendar</h2>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="sub-section bg-tertiary rounded  p-4">
-                        Projects Progress
-                    </div>
-                </div>
+        <div class="section w-50 m-2">
+
+            <div class="bg-tertiary rounded p-4 sub-section">
+                <h2>Projects Progress</h2>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis a ab doloribus nam explicabo quod, pariatur laudantium porro nulla consequatur debitis sequi dolorum provident libero repellendus necessitatibus quaerat adipisci at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis a ab doloribus nam explicabo quod, pariatur laudantium porro nulla consequatur debitis sequi dolorum provident libero repellendus necessitatibus quaerat adipisci at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis a ab doloribus nam explicabo quod, pariatur laudantium porro nulla consequatur debitis sequi dolorum provident libero repellendus necessitatibus quaerat adipisci at.
             </div>
-            <div class="row g-4">
-                <div class="col-6">
-                    <div class="sub-section bg-tertiary rounded  p-4">
-                        Team Directory
-                    </div>
-                </div>
-                <div class="col-6 overflow-auto bg-tertiary sub-section rounded p-4">
-                    <div class="d-flex flex-column">
+
+                    <div class="bg-tertiary rounded p-4 sub-section">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h2>Projects</h2>
                             {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('create_project') }}" class="btn primary">Create Project</a>
+                            <a href="{{ path('create_project') }}" class="btn secondary">Create Project</a>
                             {% endif %}
                         </div>
                         {% if projects %}
@@ -63,11 +56,10 @@
                             <p class="warning m-0">No projects available.</p>
                         {% endif %}
                     </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
+                </div>
+
+            </div>
 
 </section>
 

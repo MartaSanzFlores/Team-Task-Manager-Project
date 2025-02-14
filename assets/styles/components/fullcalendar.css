@@ -1,0 +1,44 @@
+#calendar * {
+    color: #fff;
+}
+
+.fc-toolbar-title {
+    font-size: 1rem !important;
+}
+
+.fc-next-button,
+.fc-prev-button
+{
+    font-size: 0.8rem !important;
+    background-color: transparent !important;
+    border: solid 1px transparent !important;
+}
+
+.fc-next-button:hover,
+.fc-prev-button:hover
+{
+    background-color: #212529 !important;
+    border: solid 1px #aad3ff !important;
+}
+
+.fc-today-button {
+    font-size: 0.8rem !important;
+    color: #000000 !important;
+    background-color: #aad3ff !important;
+    transition: all 0.5s ease-out !important;
+}
+
+.fc-today-button:hover {
+    color: #aad3ff !important;
+    background-color: #212529 !important;
+    border: solid 1px #aad3ff !important;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: #aad3ff52 !important;
+}
+
+.fc-event-time {
+    display: none !important;
+}
+

@@ -14,6 +14,17 @@
     border: solid 1px #aad3ff;
 }
 
+.secondary {
+    color: #000000;
+    transition: all 0.5s ease-out
+}
+
+.secondary:hover {
+    color: #aad3ff;
+    background-color: #212529;
+    border: solid 1px #aad3ff;
+}
+
 .success {
     color: #000000;
     background-color: #59a783;

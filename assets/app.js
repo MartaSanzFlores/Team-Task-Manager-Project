@@ -10,5 +10,8 @@ import './styles/components/list.css';
 import './styles/components/alerts.css';
 import './styles/components/buttons.css';
 import './styles/components/sections.css';
+import './styles/components/fullcalendar.css';
+
+import './js/fullcalendar.js';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
