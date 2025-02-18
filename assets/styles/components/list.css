@@ -7,3 +7,20 @@
 .list-group-item p {
     margin-left: 2rem !important;
 }
+
+/* Tasks */
+
+.task-list {
+    list-style: none;
+    min-height: 200px;
+    border: 2px dashed #ccc;
+    padding: 10px;
+}
+
+.task-item {
+    background: #f4f4f4;
+    padding: 10px;
+    margin: 5px;
+    color: #212529;
+    cursor: grab;
+}

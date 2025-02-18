@@ -5,25 +5,115 @@
 
 {% block body %}
 
-    <section id="description" class="container text-light">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 class="my-5">{{ project.title }}</h1>
-            <div>
+    <section id="poject" class="container vh-100 text-light">
+        
+        <h1 class="py-4">{{ project.title }}</h1>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-3">
                 <p class="m-0 p-0"><span class="fw-bold">Start Date: </span>{{ project.startDate|date("Y-m-d") }}</p>
                 <p class="m-0 p-0"><span class="fw-bold">End Date: </span>{{ project.endDate|date("Y-m-d") }}</p>
             </div>
+            <div class="col">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 25%; background-color: {{ project.color }};" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                </div>
+            </div>
         </div>
+
+        <div class="mb-4">
+            <h2>Project description</h2>
+            <p>{{ project.description }}</p>
+        </div>
+
+        {%if project.getTasks() is empty %}
+
+            <div class="d-flex justify-content-end">
+                <a href="{{ path('create_task', {'id': project.id}) }}" class="btn primary">Add a task</a>
+            </div>
+
+        {% else %}
         
-        <p>{{ project.description }}</p>
-    </section>
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Current sprint</h2>
+                    <a href="{{ path('create_task', {'id': project.id}) }}" class="btn primary mb-4">Add a task</a>
+                </div>
+
+                {% set sprint_tasks = project.getTasks()|filter(task => task.status == 'sprint') %}
+            
+                <ul id="sprint" class="task-list" ondrop="drop(event, 'sprint')" ondragover="allowDrop(event)">
+                    {% for task in sprint_tasks %}
+                        <li class="task-item d-flex justify-content-between" id="task-{{ task.id }}" draggable="true" ondragstart="drag(event)">
+                            {{ task.title }}
+                            {% if task.priority %}
+                                <span class="material-symbols-outlined">
+                                    report
+                                </span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         
-    <section id="tasks">
-        <h2>Taks:</h2>
-            <ul>
-                <li>1...</li>
-                <li>2...</li>
-            </ul>
+            <div class="mb-4">
+                <h2>Backlog</h2>
+            
+                {% set backlog_tasks = project.getTasks()|filter(task => task.status == 'backlog') %}
+            
+                <ul id="backlog" class="task-list" ondrop="drop(event, 'backlog')" ondragover="allowDrop(event)">
+                    {% for task in backlog_tasks %}
+                        <li class="task-item d-flex justify-content-between" id="task-{{ task.id }}" draggable="true" ondragstart="drag(event)">
+                            {{ task.title }}
+                            {% if task.priority %}
+                                <span class="material-symbols-outlined">
+                                    report
+                                </span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        
+        {% endif %}
+        
+
     </section>
     
+    <script>
+        function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(event) {
+        event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function drop(event, newStatus) {
+        event.preventDefault();
+        var taskId = event.dataTransfer.getData("text");
+        var taskElement = document.getElementById(taskId);
+
+        console.log(taskId);
+        
+        event.target.appendChild(taskElement);
+
+        updateTaskStatus(taskId, newStatus);
+    }
+
+        function updateTaskStatus(taskId, newStatus) {
+            fetch('api/update-task-status/' + taskId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ status: newStatus })
+            }).then(response => response.json())
+                .then(data => console.log("Status updated:", data))
+                .catch(error => console.error("Error updating task:", error));
+        }
+    </script>
 
 {% endblock %}

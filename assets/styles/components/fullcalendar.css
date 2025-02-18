@@ -6,6 +6,10 @@
     font-size: 1rem !important;
 }
 
+.fc-event-title {
+    color: #212529 !important;
+}
+
 .fc-next-button,
 .fc-prev-button
 {

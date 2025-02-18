@@ -38,9 +38,29 @@ class Project
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'participatingProjects')]
     private Collection $members;
 
+    /**
+     * @var Collection<int, Task>
+     */
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project')]
+    private Collection $tasks;
+
+    #[ORM\Column(length: 7)]
+    private ?string $color = null;
+
+    public static $availableColors = [
+        '#d4e9ff',
+        '#d4ffea',
+        '#ffd4e9',
+        '#ffead4',
+        '#ffffd4',
+        '#d5d4ff',
+        '#ffd5d4'
+    ];
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +148,48 @@ class Project
     public function removeMember(User $member): static
     {
         $this->members->removeElement($member);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getProject() === $this) {
+                $task->setProject(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }
