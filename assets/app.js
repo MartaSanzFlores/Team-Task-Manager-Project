@@ -9,7 +9,7 @@ import './styles/app.css';
 import './styles/components/list.css';
 import './styles/components/alerts.css';
 import './styles/components/buttons.css';
-import './styles/components/sections.css';
+import './styles/components/scroll.css';
 import './styles/components/fullcalendar.css';
 
 /* JS */

@@ -1,0 +1,28 @@
+
+.scroll::-webkit-scrollbar,
+.fc-scroller::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scroll::-webkit-scrollbar-track,
+.fc-scroller::-webkit-scrollbar-track {
+    background: #606264;
+    border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar-thumb,
+.fc-scroller::-webkit-scrollbar-thumb {
+    background: #aad3ff; 
+    border-radius: 20px;
+}
+
+
+.scroll::-webkit-scrollbar-thumb:hover,
+.fc-scroller::-webkit-scrollbar-thumb:hover {
+    background: #212529; 
+}
+
+
+
+
+
