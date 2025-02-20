@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Repository\TaskRepository;
+use App\Service\ProjectProgressService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -33,7 +34,7 @@ final class TaskController extends AbstractController
     }
 
     #[Route('/project/api/update-task-progressState/task-{id}', name: 'update_task_progressState', methods: ['POST'])]
-    public function updateTaskProgressState(int $id, Request $request, EntityManagerInterface $entityManager, TaskRepository $taskRepository): JsonResponse
+    public function updateTaskProgressState(int $id, Request $request, EntityManagerInterface $entityManager, TaskRepository $taskRepository, ProjectProgressService $progressService ): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -49,7 +50,16 @@ final class TaskController extends AbstractController
         $task->setProgressState($data['progressState']);
         $entityManager->flush();
 
-        return new JsonResponse(['success' => true]);
+        //progress project calcule
+        $project = $task->getProject();
+        $progress = $progressService->calculateProgress($project);
+        $projectColor = $project->getColor();
+
+        return new JsonResponse([
+            'success' => true,
+            'progress' => $progress,
+            'color' => $projectColor
+        ]);
     }
 
 

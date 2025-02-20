@@ -16,7 +16,16 @@
             </div>
             <div class="col">
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 25%; background-color: {{ project.color }};" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    {% if progress == 0 %}
+                        {% set width = 100 %}
+                        {% set text = 'No task completed' %}
+                        {% set color = '#e5e5e5' %}
+                    {% else %}
+                        {% set width = progress %}
+                        {% set text = progress ~ '%' %}
+                        {% set color = project.color %}
+                    {% endif %}
+                    <div class="progress-bar" role="progressbar" style="width: {{ width }}%; background-color: {{ color }};" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">{{ text }}</div>
                 </div>
             </div>
         </div>
@@ -59,11 +68,13 @@
 
                         <p class="h4 m-0 me-2">{{ task.title }}</p>
                         {% if task.priority %}
-                            <span class="material-symbols-outlined">
+                            <span class="material-symbols-outlined priority">
                                 report
                             </span>
                         {% endif %}
-                            <button class="btn btn-sm tertiary ms-auto" 
+                        <div class="ms-auto">
+                            <button class="btn btn-link archive-btn {% if task.progressState != 'done' %}d-none{% endif %}">Archive</button>
+                            <button class="btn btn-sm tertiary" 
                                 type="button" 
                                 data-bs-toggle="offcanvas" 
                                 data-bs-target="#taskDetailsOffcanvas"
@@ -77,6 +88,8 @@
                                 >
                                 Details
                             </button>
+                        </div>
+                            
                     </li>
                     {% endfor %}
                 </ul>
@@ -104,11 +117,13 @@
 
                         <p class="h4 m-0 me-2">{{ task.title }}</p>
                         {% if task.priority %}
-                            <span class="material-symbols-outlined">
+                            <span class="material-symbols-outlined priority">
                                 report
                             </span>
                         {% endif %}
-                            <button class="btn btn-sm tertiary ms-auto" 
+                        <div class="ms-auto">
+                            <button class="btn btn-link archive-btn {% if task.progressState != 'done' %}d-none{% endif %}">Archive</button>
+                            <button class="btn btn-sm tertiary" 
                                 type="button" 
                                 data-bs-toggle="offcanvas" 
                                 data-bs-target="#taskDetailsOffcanvas"
@@ -122,6 +137,7 @@
                                 >
                                 Details
                             </button>
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>

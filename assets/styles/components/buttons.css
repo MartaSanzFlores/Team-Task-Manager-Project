@@ -48,3 +48,15 @@
     background-color: #212529;
     border: solid 1px #59a783;
 }
+
+.btn-link {
+    font-size: 0.8rem !important;
+    color: #000000;
+    transition: all 0.5s ease-out;
+}
+
+.btn-link:hover {
+    color: #212529;
+    font-weight: 800;
+}
+

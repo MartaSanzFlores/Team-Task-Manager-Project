@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use App\Service\ProjectProgressService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +54,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route('/project/{id}', name: 'project', methods: ['GET'])]
-    public function show(int $id, EntityManagerInterface $entityManager): Response
+    public function show(int $id, EntityManagerInterface $entityManager, ProjectProgressService $progressService): Response
     {
         $project = $entityManager->getRepository(Project::class)->find($id);
 
@@ -61,8 +62,11 @@ final class ProjectController extends AbstractController
             throw $this->createNotFoundException('Project not found');
         }
 
+        $progress = $progressService->calculateProgress($project);
+
         return $this->render('project/show.html.twig', [
             'project' => $project,
+            'progress' => $progress
         ]);
 
     }
