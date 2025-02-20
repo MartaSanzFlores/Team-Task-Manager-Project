@@ -8,7 +8,80 @@
 }
 
 /* Progress info */
-
 .progress-bar {
     color: #212529 !important;
+}
+
+/* Info badges */
+.badge {    
+    padding: 0.5rem !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-toggle {
+    border: none !important;
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.5rem !important;
+}
+
+.pending {
+    background-color: #464646 !important;
+}
+
+.pending.form-select {
+    --bs-form-select-bg-img: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' height='32px' viewBox='0 -960 960 960' width='32px' fill='%23e8eaed'><path d='M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z'/></svg>") !important;
+    background-size: 24px 24px;
+}
+
+
+.pending::before {
+    font-family: 'Material Symbols Outlined';
+    content: "\ef64";
+    margin-right: 0.5rem;
+    font-size: 18px;
+}
+
+.ongoing {
+    background-color: #7890dda6 !important;
+}
+
+.ongoing::before {
+    font-family: 'Material Symbols Outlined';
+    content: "\e726";
+    margin-right: 0.5rem;
+    font-size: 18px;
+}
+
+.done {
+    background-color: #66a874ab !important;
+}
+
+.done::before {
+    font-family: 'Material Symbols Outlined';
+    content: "\e2e6";
+    margin-right: 0.5rem;
+    font-size: 18px;
+}
+
+.ko {
+    background-color: #c23e2cab !important;
+}
+
+.ko::before {
+    font-family: 'Material Symbols Outlined';
+    content: "\e99a";
+    margin-right: 0.5rem;
+    font-size: 18px;
+}
+
+.form-select.badge {
+    width: 15%;
+}
+
+.priority {
+    color: #b12a2a;
 }

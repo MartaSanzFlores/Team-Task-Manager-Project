@@ -23,6 +23,9 @@ class Task
     #[ORM\Column(length: 50)]
     private ?string $status = "backlog"; // "backlog", "sprint", "finished"
 
+    #[ORM\Column(length: 20)]
+    private string $progressState = 'pending'; // pending, ongoing, ko, done
+
     #[ORM\Column(type: 'boolean')]
     private bool $priority = false;
 
@@ -106,6 +109,26 @@ class Task
     public function setProject(?Project $project): static
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of progressState
+     */ 
+    public function getProgressState()
+    {
+        return $this->progressState;
+    }
+
+    /**
+     * Set the value of progressState
+     *
+     * @return  self
+     */ 
+    public function setProgressState($progressState)
+    {
+        $this->progressState = $progressState;
 
         return $this;
     }

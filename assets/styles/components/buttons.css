@@ -25,6 +25,18 @@
     border: solid 1px #aad3ff;
 }
 
+.tertiary {
+    color: #aad3ff;
+    background-color: #212529;
+    transition: all 0.5s ease-out
+}
+
+.tertiary:hover {
+    color: #212529;
+    background-color: #aad3ff;
+    border: solid 1px #212529;
+}
+
 .success {
     color: #000000;
     background-color: #59a783;

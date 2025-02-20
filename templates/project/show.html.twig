@@ -44,14 +44,40 @@
             
                 <ul id="sprint" class="task-list" ondrop="drop(event, 'sprint')" ondragover="allowDrop(event)">
                     {% for task in sprint_tasks %}
-                        <li class="task-item d-flex justify-content-between" id="task-{{ task.id }}" draggable="true" ondragstart="drag(event)">
-                            {{ task.title }}
-                            {% if task.priority %}
-                                <span class="material-symbols-outlined">
-                                    report
-                                </span>
-                            {% endif %}
-                        </li>
+                    <li class="task-item d-flex align-items-center" id="task-{{ task.id }}" draggable="true" ondragstart="drag(event)">
+
+                        <div class="dropdown">
+                            <button class="badge rounded-pill me-4 dropdown-toggle {{ task.progressState }}" type="button" id="dropdownProgressState" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ task.progressState|capitalize }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownProgressState">
+                                {% for state in ['pending', 'ongoing', 'done', 'ko'] %}
+                                    <li class="dropdown-item progressState-item">{{ state|capitalize }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <p class="h4 m-0 me-2">{{ task.title }}</p>
+                        {% if task.priority %}
+                            <span class="material-symbols-outlined">
+                                report
+                            </span>
+                        {% endif %}
+                            <button class="btn btn-sm tertiary ms-auto" 
+                                type="button" 
+                                data-bs-toggle="offcanvas" 
+                                data-bs-target="#taskDetailsOffcanvas"
+                                data-title="{{ task.title }}"
+                                data-description="{{ task.description }}"
+                                {% if task.priority %}
+                                    data-priority="Hight"
+                                {% else %}
+                                    data-priority="Normal"
+                                {% endif %}
+                                >
+                                Details
+                            </button>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -63,18 +89,56 @@
             
                 <ul id="backlog" class="task-list" ondrop="drop(event, 'backlog')" ondragover="allowDrop(event)">
                     {% for task in backlog_tasks %}
-                        <li class="task-item d-flex justify-content-between" id="task-{{ task.id }}" draggable="true" ondragstart="drag(event)">
-                            {{ task.title }}
-                            {% if task.priority %}
-                                <span class="material-symbols-outlined">
-                                    report
-                                </span>
-                            {% endif %}
-                        </li>
+                    <li class="task-item d-flex align-items-center" id="task-{{ task.id }}" draggable="true" ondragstart="drag(event)">
+
+                        <div class="dropdown">
+                            <button class="badge rounded-pill me-4 dropdown-toggle {{ task.progressState }}" type="button" id="dropdownProgressState" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ task.progressState|capitalize }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownProgressState">
+                                {% for state in ['pending', 'ongoing', 'done', 'ko'] %}
+                                    <li class="dropdown-item progressState-item">{{ state|capitalize }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <p class="h4 m-0 me-2">{{ task.title }}</p>
+                        {% if task.priority %}
+                            <span class="material-symbols-outlined">
+                                report
+                            </span>
+                        {% endif %}
+                            <button class="btn btn-sm tertiary ms-auto" 
+                                type="button" 
+                                data-bs-toggle="offcanvas" 
+                                data-bs-target="#taskDetailsOffcanvas"
+                                data-title="{{ task.title }}"
+                                data-description="{{ task.description }}"
+                                {% if task.priority %}
+                                    data-priority="Hight"
+                                {% else %}
+                                    data-priority="Normal"
+                                {% endif %}
+                                >
+                                Details
+                            </button>
+                    </li>
                     {% endfor %}
                 </ul>
 
             </div>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="taskDetailsOffcanvas" aria-labelledby="taskDetailsLabel">
+                <div class="offcanvas-header">
+                    <h3><span id="taskTitle" class="text-bold"></span></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p><strong>Description:</strong> <span id="taskDescription"></span></p>
+                    <p><strong>Priority:</strong> <span id="taskPriority"></span></p>
+                </div>
+            </div>
+            
         
         {% endif %}
         
@@ -83,24 +147,22 @@
     
     <script>
         function allowDrop(event) {
-        event.preventDefault();
-    }
+            event.preventDefault();
+        }
 
-    function drag(event) {
-        event.dataTransfer.setData("text", event.target.id);
-    }
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
 
-    function drop(event, newStatus) {
-        event.preventDefault();
-        var taskId = event.dataTransfer.getData("text");
-        var taskElement = document.getElementById(taskId);
+        function drop(event, newStatus) {
+            event.preventDefault();
+            var taskId = event.dataTransfer.getData("text");
+            var taskElement = document.getElementById(taskId);
 
-        console.log(taskId);
-        
-        event.target.appendChild(taskElement);
+            event.target.appendChild(taskElement);
 
-        updateTaskStatus(taskId, newStatus);
-    }
+            updateTaskStatus(taskId, newStatus);
+        }
 
         function updateTaskStatus(taskId, newStatus) {
             fetch('api/update-task-status/' + taskId, {
@@ -114,6 +176,16 @@
                 .then(data => console.log("Status updated:", data))
                 .catch(error => console.error("Error updating task:", error));
         }
+
+        // function updateBadgeStyle(selectElement) {
+        //     const badgeClasses = ["pending", "ongoing", "done", "ko"];
+        //     const selectedValue = selectElement.value;
+
+        //     badgeClasses.forEach(cls => selectElement.classList.remove(cls));
+
+        //     selectElement.classList.add(selectedValue);
+        // }
+
     </script>
 
 {% endblock %}
