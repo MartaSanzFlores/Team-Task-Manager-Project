@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <section id="profile" class="container text-light vh-100 d-flex flex-column justify-content-center">
+        <h1 class="py-2">Profile</h1>
+        
+        <div class="row gx-4 align-items-stretch">
+            <div class="col-4">
+                <div class="d-flex flex-column justify-content-center align-items-center bg-secondary p-4 rounded w-100 h-100">
+                    <span class="material-symbols-outlined mb-3 avatar" style="font-size: 10rem;">account_circle</span>
+                    <h2>{{user.name}}</h2>
+                </div>
+            </div> 
+            <div class="col-8">
+                <div class="d-flex flex-column justify-content-center bg-secondary p-4 rounded w-100 h-100">
+                    {{ form_start(form) }}
+                        <div class="form-group mb-2">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="d-flex align-items-center gap-4">
+                            <button type="submit" class="btn success mt-4">Edit</button>
+                        </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+        {% if user.participatingProjects is not empty %}
+            <div class="row mt-4">
+                <div class="col-12 h-auto">
+                    <h3>My projects:</h3>
+                    <div class="d-flex flex-column bg-secondary p-4 rounded">
+                        <ul class="m-0">    
+                        {% for project in user.participatingProjects %}
+                            <a  href="{{ path('project', {'id': project.id}) }}"><li>{{ project.title }}</li></a>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+        {% endif %}
+
+    </section>
+{% endblock %}
+

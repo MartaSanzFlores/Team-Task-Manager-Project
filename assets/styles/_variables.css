@@ -1,0 +1,30 @@
+/* ============================= */
+/* GLOBAL VARIABLES */
+/* ============================= */
+
+/* Colors */
+:root {
+    --primary: #007bff;
+    --primary-hover: #0056b3;
+
+    --secondary: #6c757d;
+    --secondary-hover: #545b62;
+
+    --success: #28a745;
+    --success-hover: #1e7e34;
+
+    --danger: #dc3545;
+    --danger-hover: #bd2130;
+
+    --warning: #ffc107;
+    --warning-hover: #d39e00;
+
+    --info: #17a2b8;
+    --info-hover: #117a8b;
+
+    --light: #f8f9fa;
+    --light-hover: #dae0e5;
+
+    --dark: #343a40;
+    --dark-hover: #1d2124;
+}
