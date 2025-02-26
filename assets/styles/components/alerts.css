@@ -14,10 +14,15 @@
 
 /* Info badges */
 .badge {    
-    padding: 0.5rem !important;
+    padding: 0.5rem;
     display: flex;
     align-items: center;
     cursor: pointer;
+}
+
+.badge.list {
+    padding: 0.25rem !important;
+    cursor: inherit !important;
 }
 
 .dropdown-toggle {

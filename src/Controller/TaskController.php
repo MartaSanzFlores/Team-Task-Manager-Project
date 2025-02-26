@@ -9,13 +9,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class TaskController extends AbstractController
 {
 
     #[Route('/project/{id}/create-task', name: 'create_task')]
-    public function ceateTask(Project $project, Request $request, EntityManagerInterface $entityManager): Response
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function createTask(Project $project, Request $request, EntityManagerInterface $entityManager): Response
     {
         $task = new Task();
         $task->setProject($project);

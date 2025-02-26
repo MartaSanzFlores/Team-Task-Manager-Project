@@ -17,17 +17,18 @@ final class HomeController extends AbstractController
         return $this->render('home/welcome.html.twig');
     }
 
-    #[Route('/home', name: 'app_home')]
+    #[Route('/dashboard', name: 'app_dashboard')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function home(ProjectRepository $projectRepository, ProjectProgressService $progressService): Response
+    public function dashboard(ProjectRepository $projectRepository, ProjectProgressService $progressService): Response
     {
 
-        // get all projects
-        $projects = $projectRepository->findAll();
+        $user = $this->getUser();
 
-        // get progress
+        // get projects for the current user
+        $projects = $projectRepository->findUserProjects($user);
+
+        // calculate progress
         $progressData = [];
-
         foreach( $projects as $project) {
             $progress = $progressService->calculateProgress($project);
 

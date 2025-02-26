@@ -2,20 +2,17 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Project;
-use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ProjectController extends AbstractController
 {
 
     #[Route('/api/calendar-events', name: 'api_calendar_events', methods: ['GET'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function calendarEvents(ProjectRepository $projectRepository): JsonResponse
     {
         $projects = $projectRepository->findAll();    

@@ -4,33 +4,43 @@
 
 {% block body %}
 <section id="login_page" class="container h-100 d-flex justify-content-center">
-    <div class="d-flex flex-column justify-content-center w-100 text-light bg-secondary m-5 p-4 rounded">
-        <h1 class="mb-4">Login</h1>
 
-        {% if error %}
-            <div class="alert alert-danger">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-        {% endif %}
+    <div class="row align-items-center gx-5">
 
-        <form action="{{ path('app_login') }}" method="post">
-            <div class="mb-3">
-                <label for="username" class="form-label">Email:</label>
-                <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" required>
-            </div>
+        <div class="col-5">
+            <img class="w-100 mb-4" src="{{ asset('images/vector.png') }}" alt="Mon Vector">
+            <h2 class="text-center text-light">TeamTaskPro</h2>
+        </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" id="password" name="_password" class="form-control" required>
-            </div>
+        <div class="col-6 offset-1 d-flex flex-column justify-content-center text-light bg-secondary p-4 rounded">
+            <h1 class="mb-4">Login</h1>
 
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
 
-            <div class="d-flex justify-content-center align-items-center gap-4 mt-5">
-                <button type="submit" class="btn primary">Login</button>
-                <p class="m-0 p-0">Don't have an account yet? Register <a class="link" href="{{ path('app_register') }}">here</a></p>
-            </div>
-        </form>
+            <form action="{{ path('app_login') }}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Email:</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="_password" class="form-control" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div class="d-flex justify-content-center align-items-center gap-4 mt-5">
+                    <button type="submit" class="btn primary">Login</button>
+                    <p class="m-0 p-0">Don't have an account yet? Register <a class="link" href="{{ path('app_register') }}">here</a></p>
+                </div>
+            </form>
+        </div>
+
     </div>
 </section>
 {% endblock %}

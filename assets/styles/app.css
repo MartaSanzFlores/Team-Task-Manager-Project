@@ -22,10 +22,13 @@ a:hover {
     color: #aad3ff;
 }
 
-.btn-navbar {
+.menu-navbar {
     position: fixed;
     top: 32px;
     right: 32px;
+}
+
+.btn-navbar {
     padding: 0 !important;
     border-radius: 4px !important;
     display: flex;

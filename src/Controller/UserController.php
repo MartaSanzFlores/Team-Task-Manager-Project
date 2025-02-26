@@ -36,4 +36,22 @@ final class UserController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/my-projects', name: 'app_user_projects')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function projects(): Response
+    {
+
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createAccessDeniedException('You must be logged in to access this page.');
+        }
+
+        $projects = $user->getParticipatingProjects();
+
+        return $this->render('user/projects.html.twig', [
+            'projects' => $projects
+        ]);
+    }
 }

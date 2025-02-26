@@ -100,7 +100,7 @@
             
                 {% set backlog_tasks = project.getTasks()|filter(task => task.status == 'backlog') %}
             
-                <ul id="backlog" class="task-list" ondrop="drop(event, 'backlog')" ondragover="allowDrop(event)">
+                <ul id="backlog" class="task-list drop-list" ondrop="drop(event, 'backlog')" ondragover="allowDrop(event)">
                     {% for task in backlog_tasks %}
                     <li class="task-item d-flex align-items-center" id="task-{{ task.id }}" draggable="true" ondragstart="drag(event)">
 

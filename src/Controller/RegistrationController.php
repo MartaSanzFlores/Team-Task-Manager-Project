@@ -31,9 +31,9 @@ class RegistrationController extends AbstractController
             $userCount = $entityManager->getRepository(User::class)->count([]);
 
             if ($userCount === 0) {
-                $user->setRoles(['ROLE_ADMIN']);  // First user → Admin (Chef de projet)
+                $user->setRoles(['ROLE_ADMIN']);  // First user → Admin
             } else {
-                $user->setRoles(['ROLE_USER']);  // Others → User (Membre de l'équipe)
+                $user->setRoles(['ROLE_USER']);  // Others → User
             }
 
             $entityManager->persist($user);
@@ -41,7 +41,7 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_dashboard');
         }
 
         return $this->render('registration/register.html.twig', [

@@ -4,17 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectType;
-use App\Repository\ProjectRepository;
 use App\Service\ProjectProgressService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ProjectController extends AbstractController
 {
+
+    public function __construct(
+        private EntityManagerInterface $entityManager
+        ) {}
 
     private function getRandomColor(): string
     {
@@ -23,7 +26,8 @@ final class ProjectController extends AbstractController
     }
     
     #[Route('/create-project', name: 'create_project', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function create(Request $request): Response
     {
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
@@ -41,11 +45,11 @@ final class ProjectController extends AbstractController
             $project->setColor($randomColor);
 
             // Handle form submission and persist the project
-            $entityManager->persist($project);
-            $entityManager->flush();
+            $this->entityManager->persist($project);
+            $this->entityManager->flush();
 
             // Redirect or show a success message
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_dashboard');
         }
 
         return $this->render('project/create.html.twig', [
@@ -54,12 +58,17 @@ final class ProjectController extends AbstractController
     }
 
     #[Route('/project/{id}', name: 'project', methods: ['GET'])]
-    public function show(int $id, EntityManagerInterface $entityManager, ProjectProgressService $progressService): Response
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function show(int $id, ProjectProgressService $progressService): Response
     {
-        $project = $entityManager->getRepository(Project::class)->find($id);
+        $project = $this->entityManager->getRepository(Project::class)->find($id);
 
         if (!$project) {
             throw $this->createNotFoundException('Project not found');
+        }
+
+        if ($project->getOwner() !== $this->getUser() && !$project->getMembers()->contains($this->getUser())) {
+            throw $this->createAccessDeniedException('Access Denied');
         }
 
         $progress = $progressService->calculateProgress($project);

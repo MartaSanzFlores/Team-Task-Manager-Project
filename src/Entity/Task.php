@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -21,10 +22,12 @@ class Task
     private ?string $description = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $status = "backlog"; // "backlog", "sprint", "finished"
+    #[Assert\Choice(choices: ['backlog', 'sprint', 'finished'], message: 'Invalid status')]
+    private ?string $status = "backlog";
 
     #[ORM\Column(length: 20)]
-    private string $progressState = 'pending'; // pending, ongoing, ko, done
+    #[Assert\Choice(choices: ['pending', 'ongoing', 'ko', 'done'], message: 'Invalid progress state')]
+    private string $progressState = 'pending';
 
     #[ORM\Column(type: 'boolean')]
     private bool $priority = false;
