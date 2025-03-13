@@ -2,9 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Project;
 use App\Entity\Task;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,10 +13,12 @@ class TaskType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('description')
             ->add('priority', null, [
                 'label' => 'High priority'
             ])
+            ->add('description', null, [
+                'attr' => ['class' => 'form-control mb-3']
+            ]);
         ;
     }
 

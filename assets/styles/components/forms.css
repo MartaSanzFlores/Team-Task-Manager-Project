@@ -1,0 +1,17 @@
+.form-label {
+    margin-right: 1rem !important;
+}
+
+select option {
+    padding: 0.5rem;
+    border-radius: 12px;
+}
+
+input[type="checkbox"].form-check-input:checked {
+    background-color: #8cadd0 !important;
+    border-color: #4c7cae !important;
+}
+
+input[type="checkbox"].form-check-input:focus {
+    box-shadow: none !important;
+}

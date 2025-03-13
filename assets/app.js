@@ -11,9 +11,12 @@ import './styles/components/alerts.css';
 import './styles/components/buttons.css';
 import './styles/components/scroll.css';
 import './styles/components/fullcalendar.css';
+import './styles/components/editor-trix.css';
+import './styles/components/forms.css';
 
 /* JS */
 import './js/fullcalendar.js';
 import './js/taskList.js';
+import './js/forms.js';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

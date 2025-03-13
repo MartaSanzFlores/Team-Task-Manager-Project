@@ -3,8 +3,8 @@
 {% block title %}Create Project{% endblock %}
 
 {% block body %}
-<section id="create_project_page" class="container d-flex justify-content-center">
-    <div class="d-flex flex-column justify-content-center w-100 text-light bg-secondary m-5 p-4 rounded">
+<section id="create_project_page" class="container d-flex justify-content-center h-100 py-4">
+    <div class="d-flex flex-column justify-content-center w-75 text-light bg-secondary m-auto p-4 rounded">
         <div class="mb-4 d-flex justify-content-between align-items-center">
             <h1>Create a New Project</h1>
             <a href="{{ path('app_dashboard') }}" class="btn primary">Back to Overview</a>
@@ -12,9 +12,9 @@
 
         {{ form_start(form) }}
             {{ form_row(form.title, { 'attr': {'class': 'form-control mb-3'} }) }}
-            {{ form_row(form.description, { 'attr': {'class': 'form-control mb-3'} }) }}
-            {{ form_row(form.startDate, { 'attr': {'class': 'form-control mb-3'} }) }}
-            {{ form_row(form.endDate, { 'attr': {'class': 'form-control mb-3'} }) }}
+            {{ form_row(form.description, { 'attr': {'class': 'form-control mb-4'} }) }}
+            {{ form_row(form.startDate, { 'attr': {'class': 'form-control mb-3 datepicker'} }) }}
+            {{ form_row(form.endDate, { 'attr': {'class': 'form-control mb-3 datepicker'} }) }}
             {{ form_row(form.members, { 'attr': {'class': 'form-control mb-3'} }) }}
 
             <div class="d-flex justify-content-center align-items-center gap-4">

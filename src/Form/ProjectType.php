@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProjectType extends AbstractType
@@ -17,16 +18,24 @@ class ProjectType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('startDate', null, [
+            ->add('startDate', DateType::class, [
                 'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'datepicker'],
             ])
-            ->add('endDate', null, [
+            ->add('endDate', DateType::class, [
                 'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'datepicker'],
             ])
             ->add('members', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'name',
-                'multiple' => true,
+                'choice_label' => function ($user) {
+                    return $user->getName();
+                },
+                'multiple' => true,         // Permet la sélection multiple
+                'expanded' => true,         // Affiche les options comme des cases à cocher
+                'label' => 'Choisissez les membres du projet',  // Titre du champ
             ])
         ;
     }
