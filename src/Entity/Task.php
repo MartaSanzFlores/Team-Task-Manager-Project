@@ -35,6 +35,9 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?Project $project = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    private ?User $responsibleMember = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,6 +135,18 @@ class Task
     public function setProgressState($progressState)
     {
         $this->progressState = $progressState;
+
+        return $this;
+    }
+
+    public function getResponsibleMember(): ?User
+    {
+        return $this->responsibleMember;
+    }
+
+    public function setResponsibleMember(?User $responsibleMember): static
+    {
+        $this->responsibleMember = $responsibleMember;
 
         return $this;
     }

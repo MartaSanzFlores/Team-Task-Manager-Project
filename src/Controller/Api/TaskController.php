@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Repository\TaskRepository;
 use App\Service\ProjectProgressService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -60,6 +61,32 @@ final class TaskController extends AbstractController
             'color' => $projectColor
         ]);
     }
+
+    #[Route('/project/api/update-responsible/{taskId}', name: 'update_task_responsible', methods: ['POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function updateResponsible(Request $request, $taskId, EntityManagerInterface $entityManager)
+    {
+        $task = $entityManager->getRepository(Task::class)->find($taskId);
+        
+        if (!$task) {
+            return new JsonResponse(['message' => 'Task not found'], 404);
+        }
+
+        $data = json_decode($request->getContent(), true);
+        if (isset($data['responsibleId'])) {
+            $responsible = $entityManager->getRepository(User::class)->find($data['responsibleId']);
+            if ($responsible) {
+                $task->setResponsibleMember($responsible);
+                $entityManager->flush();
+                return new JsonResponse(['message' => 'Responsible updated successfully']);
+            } else {
+                return new JsonResponse(['message' => 'Responsible user not found'], 404);
+            }
+        }
+
+        return new JsonResponse(['message' => 'Invalid data'], 400);
+    }
+
 
 
 }

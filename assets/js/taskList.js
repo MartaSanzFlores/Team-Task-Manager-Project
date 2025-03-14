@@ -45,9 +45,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('taskTitle').textContent = button.getAttribute('data-title') || "N/A";
                 document.getElementById('taskDescription').textContent = button.getAttribute('data-description') || "N/A";
                 document.getElementById('taskPriority').textContent = button.getAttribute('data-priority') || "N/A";
+                document.getElementById('taskResponsible').value = button.getAttribute('data-responsible') || null;
+                document.getElementById('taskId').value = button.getAttribute('data-task-id') || "N/A";
             }
         });
     }
+
+    // Ajouter un gestionnaire d'événements pour la mise à jour du responsable
+    const taskResponsibleSelect = document.getElementById('taskResponsible');
+
+    taskResponsibleSelect.addEventListener('change', function () {
+
+        const taskId = document.getElementById('taskId').value;
+        console.log(taskId);
+
+        const newResponsibleId = taskResponsibleSelect.value;
+
+        // Envoyer la mise à jour du responsable via une requête AJAX
+        fetch(`api/update-responsible/${taskId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ responsibleId: newResponsibleId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Responsible updated:", data);
+        })
+        .catch(error => console.error("Error updating responsible:", error));
+    });
 
     /* TASK PROGRESS STATE (Dropdown) */
     document.addEventListener('click', function (event) {

@@ -67,6 +67,19 @@
                         </div>
 
                         <p class="h4 m-0 me-2">{{ task.title }}</p>
+                        <div class="ms-auto d-flex justify-content-center align-items-center">
+                            <p class="m-0 me-2">Responsible:  </p>
+
+                            <span 
+                                class="material-symbols-outlined fs-1"
+                                data-bs-toggle="tooltip" 
+                                data-bs-placement="top" 
+                                title="{{ task.responsibleMember.name }}"
+                            >
+                                account_circle
+                            </span>
+                        </div>
+                        
                         {% if task.priority %}
                             <span class="material-symbols-outlined priority">
                                 report
@@ -79,12 +92,14 @@
                                 data-bs-toggle="offcanvas" 
                                 data-bs-target="#taskDetailsOffcanvas"
                                 data-title="{{ task.title }}"
+                                data-task-id="{{ task.id }}"
                                 data-description="{{ task.description }}"
                                 {% if task.priority %}
                                     data-priority="Hight"
                                 {% else %}
                                     data-priority="Normal"
                                 {% endif %}
+                                data-responsible="{{ task.responsibleMember.id }}"
                                 >
                                 Details
                             </button>
@@ -128,12 +143,14 @@
                                 data-bs-toggle="offcanvas" 
                                 data-bs-target="#taskDetailsOffcanvas"
                                 data-title="{{ task.title }}"
+                                data-task-id="{{ task.id }}"
                                 data-description="{{ task.description }}"
                                 {% if task.priority %}
                                     data-priority="Hight"
                                 {% else %}
                                     data-priority="Normal"
                                 {% endif %}
+                                data-responsible="{{ task.responsibleMember.id }}"
                                 >
                                 Details
                             </button>
@@ -152,7 +169,17 @@
                 <div class="offcanvas-body">
                     <p><strong>Description:</strong> <span id="taskDescription"></span></p>
                     <p><strong>Priority:</strong> <span id="taskPriority"></span></p>
+                    <p><strong>Responsible:</strong>
+                        <input id="taskId" type="hidden" value="">
+                        <select id="taskResponsible" class="form-control mt-2">
+                            <option value="" disabled selected>Choose a member</option>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </p>
                 </div>
+                
             </div>
             
         
@@ -192,15 +219,6 @@
                 .then(data => console.log("Status updated:", data))
                 .catch(error => console.error("Error updating task:", error));
         }
-
-        // function updateBadgeStyle(selectElement) {
-        //     const badgeClasses = ["pending", "ongoing", "done", "ko"];
-        //     const selectedValue = selectElement.value;
-
-        //     badgeClasses.forEach(cls => selectElement.classList.remove(cls));
-
-        //     selectElement.classList.add(selectedValue);
-        // }
 
     </script>
 
