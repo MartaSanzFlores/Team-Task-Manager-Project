@@ -12,6 +12,7 @@ services:
     volumes:
       - ./:/code:delegated  # Optimise la lecture des fichiers
       - ./opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+      - ./public/uploads:/var/www/html/public/uploads
 
   mysql:
     image: mysql:latest  # Uses the latest official MySQL image

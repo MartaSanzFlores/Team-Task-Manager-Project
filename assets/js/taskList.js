@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Ajouter un gestionnaire d'événements pour la mise à jour du responsable
+    /* TASK Responsible */
     const taskResponsibleSelect = document.getElementById('taskResponsible');
 
     taskResponsibleSelect.addEventListener('change', function () {
@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const newResponsibleId = taskResponsibleSelect.value;
 
-        // Envoyer la mise à jour du responsable via une requête AJAX
         fetch(`api/update-responsible/${taskId}`, {
             method: 'POST',
             headers: {
@@ -73,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log("Responsible updated:", data);
+            location.reload();
         })
         .catch(error => console.error("Error updating responsible:", error));
     });

@@ -8,8 +8,15 @@
         
         <div class="row gx-4 align-items-stretch">
             <div class="col-4">
-                <div class="d-flex flex-column justify-content-center align-items-center bg-secondary p-4 rounded w-100 h-100">
-                    <span class="material-symbols-outlined mb-3 avatar" style="font-size: 10rem;">account_circle</span>
+                <div class="d-flex flex-column justify-content-center align-items-center bg-secondary p-4 rounded w-100 h-100 position-relative">
+                    <img 
+                    src="{{ asset(app.user.profileImage ? 'uploads/' ~ app.user.profileImage : 'images/default-avatar.png') }}" 
+                    data-bs-toggle="tooltip" 
+                    data-bs-placement="top" 
+                    title="{{ member.name }}"
+                    class="mb-3 avatar" 
+                    width="200" height="200">
+                    <span class="material-symbols-outlined position-absolute text-dark bg-light rounded edit" data-bs-toggle="modal" data-bs-target="#profileModal">edit</span>
                     <h2>{{user.name}}</h2>
                 </div>
             </div> 
@@ -34,6 +41,25 @@
                 </div>
             </div>
         </div>
+
+        {# Modal #}
+        <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="exampleModalLabel">Edit image profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="editProfile"  type="button" class="btn btn-primary btn-edit-profile">Save</button>
+                    </div>
+                </div>
+                </div>
+            </div>
 
         {% if user.participatingProjects is not empty %}
             <div class="row mt-4">

@@ -60,3 +60,9 @@
     font-weight: 800;
 }
 
+.edit {
+    bottom: 24px;
+    right: 24px;
+    cursor: pointer;
+}
+

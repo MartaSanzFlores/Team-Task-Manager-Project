@@ -59,6 +59,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'responsibleMember')]
     private Collection $tasks;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profileImage = null;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -244,6 +247,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $task->setResponsibleMember(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfileImage(): ?string
+    {
+        return $this->profileImage;
+    }
+
+    public function setProfileImage(?string $profileImage): static
+    {
+        $this->profileImage = $profileImage;
 
         return $this;
     }

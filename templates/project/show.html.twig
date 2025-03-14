@@ -69,23 +69,22 @@
                         <p class="h4 m-0 me-2">{{ task.title }}</p>
                         <div class="ms-auto d-flex justify-content-center align-items-center">
                             <p class="m-0 me-2">Responsible:  </p>
-
-                            <span 
-                                class="material-symbols-outlined fs-1"
-                                data-bs-toggle="tooltip" 
-                                data-bs-placement="top" 
-                                title="{{ task.responsibleMember.name }}"
-                            >
-                                account_circle
-                            </span>
+                            <img 
+                            src="{{ asset(app.user.profileImage ? 'uploads/' ~ app.user.profileImage : 'images/default-avatar.png') }}" 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="top" 
+                            title="{{ task.responsibleMember.name }}"
+                            class="avatar" 
+                            width="45" height="45">
                         </div>
                         
-                        {% if task.priority %}
-                            <span class="material-symbols-outlined priority">
-                                report
-                            </span>
-                        {% endif %}
-                        <div class="ms-auto">
+
+                        <div class="ms-auto d-flex align-items-center">
+                            {% if task.priority %}
+                                <span class="material-symbols-outlined priority mx-2">
+                                    report
+                                </span>
+                            {% endif %}
                             <button class="btn btn-link archive-btn {% if task.progressState != 'done' %}d-none{% endif %}">Archive</button>
                             <button class="btn btn-sm tertiary" 
                                 type="button" 

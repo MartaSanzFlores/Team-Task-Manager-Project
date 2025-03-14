@@ -64,17 +64,15 @@
                                         <p class="m-0 p-0">{{ project.title }}</p>
                                         <div class="d-flex gap-1">
                                             {% for member in project.members %}
-                                            <span 
-                                                class="material-symbols-outlined fs-1"
-                                                data-bs-toggle="tooltip" 
-                                                data-bs-placement="top" 
-                                                title="{{ member.name }}"
-                                            >
-                                                account_circle
-                                            </span>
+                                            <img 
+                                            src="{{ asset(app.user.profileImage ? 'uploads/' ~ app.user.profileImage : 'images/default-avatar.png') }}" 
+                                            data-bs-toggle="tooltip" 
+                                            data-bs-placement="top" 
+                                            title="{{ member.name }}"
+                                            class="avatar" 
+                                            width="45" height="45">
                                             {% endfor %}
                                         </div>
-                                        
                                         <span class="material-symbols-outlined">
                                             {% if app.user.id == project.owner.id or project.members|filter(member => member.id == app.user.id)|length > 0 %}
                                                 lock_open

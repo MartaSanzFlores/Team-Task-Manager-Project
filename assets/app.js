@@ -5,13 +5,13 @@
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
+import './styles//profile.css';
 
 import './styles/components/list.css';
 import './styles/components/alerts.css';
 import './styles/components/buttons.css';
 import './styles/components/scroll.css';
 import './styles/components/fullcalendar.css';
-import './styles/components/editor-trix.css';
 import './styles/components/forms.css';
 
 /* JS */

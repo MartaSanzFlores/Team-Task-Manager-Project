@@ -36,9 +36,13 @@
         </ul>
         <div id="user" class="dropdown p-4">
             <a href="#" class="d-flex align-items-center justify-content-start text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="material-symbols-outlined fs-1">
-                    account_circle
-                </span>
+                <img 
+                src="{{ asset(app.user.profileImage ? 'uploads/' ~ app.user.profileImage : 'images/default-avatar.png') }}" 
+                data-bs-toggle="tooltip" 
+                data-bs-placement="top" 
+                title="{{ member.name }}"
+                class="avatar me-2" 
+                width="45" height="45">
                 <span class="d-none d-sm-inline mx-1">{{ app.user.name }}</span>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
