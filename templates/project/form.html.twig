@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Project{% endblock %}
+{% block title %}{{ is_edit ? 'Edit' : 'Create' }} Project{% endblock %}
 
 {% block body %}
 <section id="create_project_page" class="container d-flex justify-content-center h-100 py-4">
     <div class="d-flex flex-column justify-content-center w-75 text-light bg-secondary m-auto p-4 rounded">
         <div class="mb-4 d-flex justify-content-between align-items-center">
-            <h1>Create a New Project</h1>
+            <h1>{{ is_edit ? 'Edit' : 'Create a New' }} Project</h1>
             <a href="{{ path('app_dashboard') }}" class="btn primary">Back to Overview</a>
         </div>
 

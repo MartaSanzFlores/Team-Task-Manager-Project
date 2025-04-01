@@ -66,3 +66,21 @@
     cursor: pointer;
 }
 
+.more {
+    z-index: 100;
+    right: 0;
+}
+
+.btn-icon {
+    color: #000000;
+}
+
+.btn-icon.delete:hover {
+    color: #bd2130;
+}
+
+.btn-icon.edit:hover {
+    color: #59a783;
+}
+
+

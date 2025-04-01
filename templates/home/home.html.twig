@@ -57,33 +57,37 @@
                     </div>
                     <div class="flex-grow-1 overflow-auto scroll">
                         {% if projects %}
-                        {% for project in projects %}
                             <div class="list-group pe-2">
-                                <a href="{{ path('project', {'id': project.id}) }}" class="list-group-item list-group-item-action">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="m-0 p-0">{{ project.title }}</p>
-                                        <div class="d-flex gap-1">
-                                            {% for member in project.members %}
-                                            <img 
-                                            src="{{ asset(app.user.profileImage ? 'uploads/' ~ app.user.profileImage : 'images/default-avatar.png') }}" 
-                                            data-bs-toggle="tooltip" 
-                                            data-bs-placement="top" 
-                                            title="{{ member.name }}"
-                                            class="avatar" 
-                                            width="45" height="45">
-                                            {% endfor %}
-                                        </div>
-                                        <span class="material-symbols-outlined">
-                                            {% if app.user.id == project.owner.id or project.members|filter(member => member.id == app.user.id)|length > 0 %}
-                                                lock_open
-                                            {% else %}
-                                                lock
-                                            {% endif %}
-                                        </span>
-                                    </div>
-                                </a>
+                        {% for project in projects %}
+                        <a href="{{ path('project', {'id': project.id}) }}">
+                            <div class="d-flex justify-content-start align-items-center list-group-item rounded position-relative">
+                                <p class="m-0 p-0">{{ project.title }}</p>
+                                <div class="d-flex gap-1 ms-4">
+                                    {% for member in project.members %}
+                                    <img 
+                                    src="{{ asset(member.profileImage ? 'uploads/' ~ member.profileImage : 'images/default-avatar.png') }}" 
+                                    data-bs-toggle="tooltip" 
+                                    data-bs-placement="top" 
+                                    title="{{ member.name }}"
+                                    class="avatar" 
+                                    width="45" height="45">
+                                    {% endfor %}
+                                </div>
+                                <div class="position-absolute more d-flex align-items-center">
+                                    <form action="{{ path('edit_project', { 'id': project.id }) }}" method="post">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ project.id) }}">
+                                        <button class="btn btn-icon edit material-symbols-outlined">edit</button>
+                                    </form>
+                                    <form action="{{ path('delete_project', { 'id': project.id }) }}" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                                        <button class="btn btn-icon delete material-symbols-outlined">delete</button>
+                                    </form>
+                                </div>
                             </div>
+                        </a>
                         {% endfor %}
+                            </div>
                         {% else %}
                             <p class="warning m-0">No projects available.</p>
                         {% endif %}
@@ -94,6 +98,24 @@
 
         </div>
 
+    </div>
+
+    <!-- Confirmation modal -->
+    <div id="confirmDeleteModal" class="modal" tabindex="-1" role="dialog" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title text-black">Confirm deletion</h5>
+            </div>
+            <div class="modal-body text-black">
+                <p>Are you sure you want to delete this project? This action is irreversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelDelete">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Confirm</button>
+            </div>
+        </div>
+        </div>
     </div>
 
 </section>

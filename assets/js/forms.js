@@ -47,6 +47,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    const deleteButtons = document.querySelectorAll(".delete");
+    const modal = document.getElementById("confirmDeleteModal");
+    const confirmButton = document.getElementById("confirmDelete");
+    const cancelButton = document.getElementById("cancelDelete");
+    const deleteForm = document.getElementById("deleteForm");
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+    
+            const formAction = this.closest('form').action;
+    
+            modal.style.display = 'block';
+    
+            confirmButton.addEventListener('click', function() {
+                deleteForm.action = formAction;
+                deleteForm.submit();
+            });
+    
+            cancelButton.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+        });
+    });
+    
+
 });
 
 

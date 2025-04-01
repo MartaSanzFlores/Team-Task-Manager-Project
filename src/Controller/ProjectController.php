@@ -50,13 +50,55 @@ final class ProjectController extends AbstractController
             $this->entityManager->persist($project);
             $this->entityManager->flush();
 
-            // Redirect or show a success message
             return $this->redirectToRoute('app_dashboard');
         }
 
-        return $this->render('project/create.html.twig', [
+        return $this->render('project/form.html.twig', [
             'form' => $form->createView(),
+            'project' => $project,
+            'is_edit' => false,
         ]);
+    }
+
+    #[Route('/edit-project/{id}', name: 'edit_project',methods: ['GET', 'POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function edit(int $id, Request $request): Response
+    {
+        $project = $this->entityManager->getRepository(Project::class)->find($id);
+
+        if ($project->getOwner() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('Access Denied');
+        }
+
+        $form = $this->createForm(ProjectType::class, $project);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_dashboard');
+        }
+
+        return $this->render('project/form.html.twig', [
+            'form' => $form->createView(),
+            'project' => $project,
+            'is_edit' => true,
+        ]);
+    }
+
+    #[Route('/delete-project/{id}', name: 'delete_project', methods: ['POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function delete(Request $request, Project $project): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $project->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($project);
+            $this->entityManager->flush();
+        }
+
+        // Redirect or show a success message
+        return $this->redirectToRoute('app_dashboard');
+
     }
 
     #[Route('/project/{id}', name: 'project', methods: ['GET'])]

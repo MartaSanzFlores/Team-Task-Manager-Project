@@ -70,7 +70,7 @@
                         <div class="ms-auto d-flex justify-content-center align-items-center">
                             <p class="m-0 me-2">Responsible:  </p>
                             <img 
-                            src="{{ asset(app.user.profileImage ? 'uploads/' ~ app.user.profileImage : 'images/default-avatar.png') }}" 
+                            src="{{ asset(task.responsibleMember.profileImage ? 'uploads/' ~ task.responsibleMember.profileImage : 'images/default-avatar.png') }}" 
                             data-bs-toggle="tooltip" 
                             data-bs-placement="top" 
                             title="{{ task.responsibleMember.name }}"
