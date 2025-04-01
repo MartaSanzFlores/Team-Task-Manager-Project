@@ -85,7 +85,7 @@
                                     report
                                 </span>
                             {% endif %}
-                            <button class="btn btn-link archive-btn {% if task.progressState != 'done' %}d-none{% endif %}">Archive</button>
+                            <button class="btn btn-link archive-btn {% if task.progressState != 'done' and  task.progressState != 'ko' %}d-none{% endif %}">Archive</button>
                             <button class="btn btn-sm tertiary" 
                                 type="button" 
                                 data-bs-toggle="offcanvas" 
@@ -94,9 +94,9 @@
                                 data-task-id="{{ task.id }}"
                                 data-description="{{ task.description }}"
                                 {% if task.priority %}
-                                    data-priority="Hight"
+                                    data-priority="high"
                                 {% else %}
-                                    data-priority="Normal"
+                                    data-priority="normal"
                                 {% endif %}
                                 data-responsible="{{ task.responsibleMember.id }}"
                                 >
@@ -145,9 +145,9 @@
                                 data-task-id="{{ task.id }}"
                                 data-description="{{ task.description }}"
                                 {% if task.priority %}
-                                    data-priority="Hight"
+                                    data-priority="high"
                                 {% else %}
-                                    data-priority="Normal"
+                                    data-priority="normal"
                                 {% endif %}
                                 data-responsible="{{ task.responsibleMember.id }}"
                                 >
@@ -166,8 +166,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <p><strong>Description:</strong> <span id="taskDescription"></span></p>
-                    <p><strong>Priority:</strong> <span id="taskPriority"></span></p>
+                    <p><strong>Description:</strong> 
+                        <input id="taskDescription" class="form-control mt-2">
+                    </p>
+                    <p><strong>Priority:</strong> 
+                        <select id="taskPriority" class="form-control mt-2">
+                            <option value="normal">Normal</option>
+                            <option value="high">High</option>
+                        </select>
+                    </p>
                     <p><strong>Responsible:</strong>
                         <input id="taskId" type="hidden" value="">
                         <select id="taskResponsible" class="form-control mt-2">
@@ -177,7 +184,7 @@
                             {% endfor %}
                         </select>
                     </p>
-                </div>
+                </div>                
                 
             </div>
             

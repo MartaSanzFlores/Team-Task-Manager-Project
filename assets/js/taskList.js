@@ -43,44 +43,80 @@ document.addEventListener('DOMContentLoaded', function () {
             const button = event.relatedTarget;
             if (button) {
                 document.getElementById('taskTitle').textContent = button.getAttribute('data-title') || "N/A";
-                document.getElementById('taskDescription').textContent = button.getAttribute('data-description') || "N/A";
-                document.getElementById('taskPriority').textContent = button.getAttribute('data-priority') || "N/A";
+                document.getElementById('taskDescription').value = button.getAttribute('data-description') || "N/A";
+                document.getElementById('taskPriority').value = button.getAttribute('data-priority') || null;
                 document.getElementById('taskResponsible').value = button.getAttribute('data-responsible') || null;
                 document.getElementById('taskId').value = button.getAttribute('data-task-id') || "N/A";
             }
+        });
+
+        taskDetailsOffcanvas.addEventListener('hidden.bs.offcanvas', function () {
+            document.body.style.filter = "blur(1px)";
+            document.body.style.pointerEvents = "none";
+            location.reload();
         });
     }
 
     /* TASK Responsible */
     const taskResponsibleSelect = document.getElementById('taskResponsible');
+    if (taskResponsibleSelect) {
+        taskResponsibleSelect.addEventListener('change', function () {
+            updateTaskField('responsible', taskResponsibleSelect.value);
+        });
+    }
 
-    taskResponsibleSelect.addEventListener('change', function () {
+    /* TASK Priority */
+    const taskPrioritySelect = document.getElementById('taskPriority');
+    if (taskPrioritySelect) {
+        taskPrioritySelect.addEventListener('change', function () {
+            updateTaskField('priority', taskPrioritySelect.value);
+        });
+    }
 
+    /* TASK Description */
+    const taskDescriptionInput = document.getElementById('taskDescription');
+    if (taskDescriptionInput) {
+        taskDescriptionInput.addEventListener('blur', function () {
+            updateTaskField('description', taskDescriptionInput.value);
+        });
+    }
+
+    /* Function to update a task field */
+    function updateTaskField(field, value) {
         const taskId = document.getElementById('taskId').value;
-        console.log(taskId);
-
-        const newResponsibleId = taskResponsibleSelect.value;
-
-        fetch(`api/update-responsible/${taskId}`, {
+        if (!taskId) return;
+    
+        fetch(`/project/api/update-task/${taskId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'
             },
-            body: JSON.stringify({ responsibleId: newResponsibleId })
+            body: JSON.stringify({ [field]: value })
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Responsible updated:", data);
-            location.reload();
+            console.log(`${field} updated:`, data);
+            
+            if (field === 'responsible') {
+                const selectedOption = document.querySelector(`#taskResponsible option[value="${value}"]`);
+                if (selectedOption) {
+                    document.getElementById('taskResponsible').value = value;
+                }
+            } else if (field === 'priority') {
+                document.getElementById('taskPriority').value = value;
+            } else if (field === 'description') {
+                document.getElementById('taskDescription').value = value;
+            }
+
         })
-        .catch(error => console.error("Error updating responsible:", error));
-    });
+        .catch(error => console.error(`Error updating ${field}:`, error));
+    }
 
     /* TASK PROGRESS STATE (Dropdown) */
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('progressState-item')) {
-            const taskItem = event.target.closest('.task-item');
+            const taskItem = event.target.closest('.task');
             if (!taskItem) return;
 
             const dropdown = taskItem.querySelector('#dropdownProgressState');
@@ -94,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (archiveButton) {
-                archiveButton.classList.toggle('d-none', newProgressStatus !== 'done');
+                archiveButton.classList.toggle('d-none', !(newProgressStatus === 'done' || newProgressStatus === 'ko'));
             }
 
             updateTaskProgressState(taskItem.id, newProgressStatus);
