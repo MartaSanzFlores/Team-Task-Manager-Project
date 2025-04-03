@@ -16,9 +16,11 @@ class Task
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "The title cannot be empty.")]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "The description cannot be empty.")]
     private ?string $description = null;
 
     #[ORM\Column(length: 50)]
