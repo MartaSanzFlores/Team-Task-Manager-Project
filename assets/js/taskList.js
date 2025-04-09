@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('progressState-item')) {
             const taskItem = event.target.closest('.task-item');
-            console.log(taskItem);
             if (!taskItem) return;
 
             const dropdown = taskItem.querySelector('#dropdownProgressState');
