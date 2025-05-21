@@ -1,0 +1,22 @@
+image: docker:20.10.16
+
+services:
+  - docker:20.10.16-dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+stages:
+  - test
+
+before_script:
+  - apk add --no-cache docker-compose
+  - docker-compose up -d
+  - docker-compose exec php composer install
+  - docker-compose exec php php bin/console doctrine:database:create --env=test
+  - docker-compose exec php php bin/console doctrine:schema:create --env=test
+
+run_tests:
+  stage: test
+  script:
+    - docker-compose exec php ./vendor/bin/phpunit
